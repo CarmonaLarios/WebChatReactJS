@@ -1,4 +1,15 @@
+* {
+  font-family: Ubuntu, "times new roman", times, roman, serif;
+  border: 0;
+  padding: 0;
+}
 
+#root{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
 
 Form Button {
   width: 100%;
@@ -19,7 +30,7 @@ hr.line {
 }
 
 .userInput{
-  margin-top: 25px;
+  margin-top: 5px;
 }
 
 .app {
@@ -29,12 +40,11 @@ hr.line {
   text-align: center;
 }
 
-* {
-  font-family: Ubuntu, "times new roman", times, roman, serif;
-}
+
 
 .body-backgroud{
-  background-image: url("./images/background.jpg");
+  /*background-image: url("./images/background.jpg");*/
+  background-color: #4b4949;
   background-repeat: no-repeat;
 }
 
@@ -66,23 +76,46 @@ hr.line {
   background-color: white;
   overflow: auto;
   border-radius: 5px;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 }
 
-.user-message {
+.user-message-right {
   text-align: right;
+  padding-right: 5px;
+  font-size: 18px;
+}
+
+.user-message-left {
+  text-align: left;
   padding-right: 5px;
   font-size: 18px;
 }
 
 .message {
   display: inline-flex;
-  margin: 0px auto 0px auto;
+  margin: 5px auto 5px auto;
   padding: 5px;
   font-size: 18px;
   color:white;
-  border-radius: 20px;
+  border-radius: 5px;
   margin-top: 3px;
+  background-color: hsl(245, 18%, 39%);
+}
+
+.inputMessage{
+  border-radius: 2px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.chat-alignment-left{
+  display: flex;
+  justify-content: left;
+}
+
+.chat-alignment-rigth{
+  display: flex;
+  justify-content: right;
 }
 
 .from-user {
@@ -90,3 +123,4 @@ hr.line {
   margin-bottom: 3px;
   margin-right: 5px;
 }
+

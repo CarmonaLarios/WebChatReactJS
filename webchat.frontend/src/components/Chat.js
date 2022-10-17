@@ -4,14 +4,14 @@ import ConnectedUsers from "./ConnectedUsers";
 import MessageContainer from "./MessageContainer";
 import SendMessageForm from "./SendMessageForm";
 
-const Chat = ({ messages, sendMessage, closeConnection, users }) => (
+const Chat = ({ messages, sendMessage, closeConnection, users, userId }) => (
   <div>
     <div className="leave-room">
       <Button variant="danger" onClick={()=> closeConnection()}>Sair da sala</Button>
     </div>
-    <ConnectedUsers users={users}/>
+    {<ConnectedUsers users={users}/>}
     <div className="chat">
-      <MessageContainer messages={messages} />
+      <MessageContainer messages={messages} userId={userId} />
       <SendMessageForm sendMessage={sendMessage} />
     </div>
   </div>

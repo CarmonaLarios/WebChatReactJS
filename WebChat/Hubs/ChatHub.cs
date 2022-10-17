@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
- 
+
 namespace WebChat.Hubs
 {
     public class ChatHub : Hub
@@ -18,7 +18,7 @@ namespace WebChat.Hubs
             if (_connections.TryGetValue(Context.ConnectionId, out UserConnection? userConnection))
             {
                 await Clients.Group(userConnection.Room)
-                .SendAsync("ReceiveMessage", userConnection.UserName, message);
+                .SendAsync("ReceiveMessage", userConnection.UserName, message, userConnection.UserId);
             }
         }
 
@@ -26,10 +26,12 @@ namespace WebChat.Hubs
         {
             if (_connections.TryGetValue(Context.ConnectionId, out UserConnection? userConnection))
             {
+                LeaveRoom(userConnection);
+
                 Clients.Group(userConnection.Room)
                 .SendAsync("ReceiveMessage", _botUser, $"{userConnection.UserName} saiu.");
 
-                SendConnectedUsers(userConnection.Room);
+                SendConnectedUsers(userConnection);
             }
             return base.OnDisconnectedAsync(exception);
         }
@@ -41,15 +43,24 @@ namespace WebChat.Hubs
 
             _connections[Context.ConnectionId] = userConnection;
 
-            await Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", _botUser, $"{userConnection.UserName} entrou na sala {userConnection.Room}.");
+            await Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", _botUser, $"{userConnection.UserName} entrou na sala {userConnection.Room}.", userConnection.UserId);
 
-            await SendConnectedUsers(userConnection.Room);
+            await SendConnectedUsers(userConnection);
         }
 
-        public Task SendConnectedUsers(string room)
+
+        public Task SendConnectedUsers(UserConnection userConnection)
         {
-            var users = _connections.Values.Where(c => c.Room == room).Select(c => c.UserName);
-            return Clients.Group(room).SendAsync("UsersInRoom", users);
+            var users = _connections.Values.Where(c => c.Room == userConnection.Room).Select(c => c.UserName);
+            
+            return Clients.Group(userConnection.Room).SendAsync("UsersInRoom", users);
+        }
+
+        public Task LeaveRoom(UserConnection userConnection)
+        {
+            //_connections.Values.Remove(userConnection);
+
+            return Groups.RemoveFromGroupAsync(Context.ConnectionId, userConnection.Room);
         }
     }
 }

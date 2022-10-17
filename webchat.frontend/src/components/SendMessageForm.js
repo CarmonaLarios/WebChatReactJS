@@ -17,6 +17,7 @@ const SendMessageForm = ({ sendMessage }) => {
           placeholder="Digite algo..."
           onChange={(e) => setMessage(e.target.value)}
           value={message}
+          className='inputMessage'
         />
         <InputGroup>
           <Button variant="primary" type="submit" disabled={!message}>
