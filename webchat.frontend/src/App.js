@@ -12,13 +12,16 @@ const App = () => {
   const [users, setUsers] = useState([]);
   //generate a randomId for user to help with message layout
   const [userId, setUserId] = useState(parseInt(Math.random() * 20));
+  const [accessToken, setAccessToken] = useState();
+
 
   const joinRoom = async (userName, room) => {
     try {
 
+
       const connection = new HubConnectionBuilder()
         .withUrl("https://localhost:7120/chat")
-        .configureLogging(LogLevel.Information)
+        //.configureLogging(LogLevel.Information)
         .build();
 
       connection.on("UsersInRoom", (users)=>{

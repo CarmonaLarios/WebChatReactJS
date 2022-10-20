@@ -3,7 +3,8 @@ using WebChat;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSignalR();
+builder.Services.AddSignalR()
+    .AddAzureSignalR("Endpoint=https://websignalwithoutserverless.service.signalr.net;AccessKey=gAOp/J1gznFfWZKoAsJWRIe0ST2XlMVoDKzjZuSHBBo=;Version=1.0;");
 
 builder.Services.AddCors(options =>
 {
